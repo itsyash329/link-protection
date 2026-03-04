@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+   <!DOCTYPE html>
 <html>
 <head>
   <title>Secure Access</title>
@@ -43,22 +43,21 @@
 <script>
 let finalURL = null;
 
-// Decode + hide parameters immediately
 (function () {
   const params = new URLSearchParams(window.location.search);
-  const encoded = params.get("data");
+  let encoded = params.get("data");
 
   if (encoded) {
     try {
+      // Fix Base64 padding automatically
+      while (encoded.length % 4) {
+        encoded += '=';
+      }
+
       finalURL = atob(encoded);
 
       // Hide parameters from address bar
       window.history.replaceState({}, document.title, window.location.pathname);
-
-      // Referrer check (basic)
-      if (document.referrer === "") {
-        console.log("Direct visit detected");
-      }
 
     } catch (e) {
       alert("Invalid Link");
@@ -76,7 +75,7 @@ function go() {
   }
 }
 
-// Disable right click
+// Disable right-click
 document.addEventListener("contextmenu", function(e) {
   e.preventDefault();
 });
