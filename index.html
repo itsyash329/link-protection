@@ -1,4 +1,45 @@
- <script>
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Access</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      background: #0f172a;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 15%;
+    }
+    .box {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      background: #3b82f6;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h2>🔒 Secure Link Protection</h2>
+  <p>Click below to continue</p>
+  <button onclick="go()">Continue</button>
+</div>
+
+<script>
 function go() {
   const params = new URLSearchParams(window.location.search);
   const encoded = params.get("data");
@@ -11,3 +52,6 @@ function go() {
   }
 }
 </script>
+
+</body>
+</html>
