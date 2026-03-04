@@ -10,6 +10,7 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding-top: 15%;
+      user-select: none;
     }
     .box {
       background: #1e293b;
@@ -40,17 +41,52 @@
 </div>
 
 <script>
-function go() {
+let finalURL = null;
+
+// Decode + hide parameters immediately
+(function () {
   const params = new URLSearchParams(window.location.search);
   const encoded = params.get("data");
 
   if (encoded) {
-    const decoded = atob(encoded);
-    window.location.href = decoded;
+    try {
+      finalURL = atob(encoded);
+
+      // Hide parameters from address bar
+      window.history.replaceState({}, document.title, window.location.pathname);
+
+      // Referrer check (basic)
+      if (document.referrer === "") {
+        console.log("Direct visit detected");
+      }
+
+    } catch (e) {
+      alert("Invalid Link");
+    }
   } else {
-    alert("Invalid Link");
+    alert("Invalid Access");
+  }
+})();
+
+function go() {
+  if (finalURL) {
+    window.location.href = finalURL;
+  } else {
+    alert("Link not ready");
   }
 }
+
+// Disable right click
+document.addEventListener("contextmenu", function(e) {
+  e.preventDefault();
+});
+
+// Disable common inspect shortcuts
+document.onkeydown = function(e) {
+  if (e.keyCode == 123) return false; // F12
+  if (e.ctrlKey && e.shiftKey && e.keyCode == 73) return false; // Ctrl+Shift+I
+  if (e.ctrlKey && e.keyCode == 85) return false; // Ctrl+U
+};
 </script>
 
 </body>
